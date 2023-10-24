@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+    <script type=“text/javascript” src=“jquery.js”></script>
+    <script type=“text/javascript” src=“https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js”></script>
+</head>
+<body>
+    <form id="myForm">
+        <div>
+            <div>
+                <h4>Họ và tên</h4>
+                <input type="text" name="hovaten" id="hovaten">
+            </div>
+            <div>
+                <h4>Tuổi</h4>
+                <input type="number" id="quantity" name="quantity" min="0" max="100" value="0">
+            </div>
+        </div>
+        <div>
+            <h4>Giới tính</h4>
+            <input type="radio" id="nam" name="gioitinh" value="nam">
+            <label for="nam">Nam</label><br>
+            <input type="radio" id="nu" name="gioitinh" value="nu">
+            <label for "nu">Nữ</label><br>
+            <input type="radio" id="khac" name="gioitinh" value="khac">
+            <label for="khac">Khác</label><br>
+        </div>
+        <div>
+            <h4>Sở thích</h4>
+            <input type="checkbox" name="sothich" id="chaybo" value="chaybo">
+            <label for="chaybo">Chạy bộ</label><br>
+            <input type="checkbox" name="sothich" id="choigame" value="choigame">
+            <label for="choigame">Chơi game</label><br>
+            <input type="checkbox" name="sothich" id="bansung" value="bansung">
+            <label for="bansung">Bắn súng</label><br>
+            <input type="checkbox" name="sothich" id="xemphim" value="xemphim">
+            <label for="xemphim">Xem phim</label><br>
+            <input type="checkbox" name="sothich" id="bongda" value="bongda">
+            <label for="bongda">Bóng đá</label><br>
+            <input type="checkbox" name="sothich" id="bongro" value="bóng rổ">
+            <label for="bongro">Bóng rổ</label><br>
+            <input type="checkbox" name="sothich" id="khac" value="khac">
+            <label for="khac">Khác</label><br>
+        </div>
+        <button type="submit">Gửi</button>
+        <button type="reset">Reset</button>
+    </form>
+
+    <div id="result" class="student-list">
+        <h2>Danh sách sinh viên</h2>
+        <div id="studentList"></div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            var studentList = [];
+        
+            $("#myForm").submit(function(event) {
+                event.preventDefault(); 
+        
+                var hovaten = $("#hovaten").val();
+                var tuoi = $("#quantity").val();
+                var gioitinh = $("input[name='gioitinh']:checked").val();
+                var sothich = [];
+                $("input[name='sothich']:checked").each(function() {
+                    sothich.push($(this).val());
+                });
+        
+                var studentInfo = {
+                    hovaten: hovaten,
+                    tuoi: tuoi,
+                    gioitinh: gioitinh,
+                    sothich: sothich
+                };
+                studentList.push(studentInfo);
+        
+                displayStudentList(studentList);
+        
+                $("#myForm")[0].reset();
+            });
+        
+            $("#myForm button[type='reset']").click(function() {
+                $("#studentList").html("");
+                $("#myForm")[0].reset();
+            });
+        
+            
+            function displayStudentList(students) {
+                var studentListHtml = "<h2>Danh sách sinh viên</h2>";
+        
+                for (var i = 0; i < students.length; i++) {
+                    var student = students[i];
+                    studentListHtml += "<div>";
+                    studentListHtml += "<p>Họ và tên: " + student.hovaten + "</p>";
+                    studentListHtml += "<p>Tuổi: " + student.tuoi + "</p>";
+                    studentListHtml += "<p>Giới tính: " + student.gioitinh + "</p>";
+                    studentListHtml += "<p>Sở thích: " + student.sothich.join(", ") + "</p>";
+                    studentListHtml += "</div>";
+                }
+        
+                $("#studentList").html(studentListHtml);
+            }
+        });
+        
+    </script>
+</body>
+</html>
